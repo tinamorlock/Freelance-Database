@@ -1,0 +1,62 @@
+body {
+    font-family: "Courier New";
+    background-color: black;
+    color: white;
+    width: 100%;
+}
+
+h1 {
+    background-color: greenyellow;
+    color: black;
+    text-align: center;
+}
+
+h2 {
+    margin-top: 45px;
+    border: 2px solid greenyellow;
+    color: greenyellow;
+    display: inline-block;
+    margin-left: 45px;
+    padding: 1px;
+}
+
+button {
+    background-color: greenyellow;
+    border: 0;
+}
+
+input {
+    background-color: yellowgreen;
+    color: black;
+}
+
+::placeholder {
+    color: black;
+    font-size: 115%;
+}
+
+input {
+    width: 500px;
+}
+
+#toDoList {
+    list-style-type: none;
+    margin-top: 50px;
+}
+
+li {
+    padding: 4px;
+}
+
+.task {
+    padding-right: 50px;
+}
+.category {
+    background-color: yellowgreen;
+    color: black;
+    margin-right: 50px;
+}
+
+.done {
+    text-decoration: line-through;
+}
