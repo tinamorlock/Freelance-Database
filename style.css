@@ -47,7 +47,7 @@ input {
     width: 500px;
 }
 
-#toDoList {
+#clientList {
     list-style-type: none;
     margin-top: 50px;
 }
@@ -56,17 +56,13 @@ li {
     padding: 4px;
 }
 
-.task {
+.client-name {
     padding-right: 50px;
 }
-.category {
+.client-category {
     background-color: var(--yellow);
     color: var(--black);
     margin-right: 50px;
-}
-
-.done {
-    text-decoration: line-through;
 }
 
 #firstName {

@@ -16,10 +16,8 @@ categoryInput.addEventListener('input', function () {
     updateCategoryOptions(categoryInput.value);
 });
 
-// checks that all values have been added
-
 function validateClient() {
-    clientArr = [
+    const clientArr = [
         firstName.value,
         lastName.value,
         streetAdd.value,
@@ -32,14 +30,12 @@ function validateClient() {
             alert('Please fill in all the client data and resubmit.');
             return false;
         }
-        return true;
     }
+    return true;
 }
 
-// grabs values from the input fields
-
-function createClient () {
-    if(validateClient()) {
+function createClient() {
+    if (validateClient()) {
         const clientData = {
             fname: firstName.value,
             lname: lastName.value,
@@ -48,27 +44,20 @@ function createClient () {
             clientCity: city.value,
             clientState: state.value,
             clientZip: zipcode.value,
-        }
+        };
 
-        // adds to html page
-
-        displayClient(clientData.fname, clientData.lname, clientData.category);
+        displayClient(clientData);
         saveToLocalStorage();
         clearClientInputs();
     }
-
 }
 
-// displays client name and category on the index page
-
-function displayClient(clientFirst, clientLast, clientCategory) {
+function displayClient(clientData) {
     const li = document.createElement('li');
-    li.innerHTML = `<span class="client-name"> ${clientFirst} ${clientLast}</span><span class="client-category">${clientCategory}</span> <button class="delete">delete</button>`;
+    li.innerHTML = `<span class="client-name">${clientData.fname} ${clientData.lname}</span><span class="client-category">${clientData.category}</span> <button class="delete">delete</button>`;
     ul.appendChild(li);
     li.querySelector('.delete').addEventListener('click', deleteClient);
 }
-
-// deletes client from page and local storage
 
 function deleteClient(event) {
     event.stopPropagation();
@@ -79,46 +68,35 @@ function deleteClient(event) {
     }
 }
 
-// saves any changes (add or remove) to local storage
-
 function saveToLocalStorage() {
     const clients = Array.from(ul.children).map(clientElement => {
-        const clientCategory = categorySelect.value !== '' ? categorySelect.value : categoryInput.value;
-        const clientData = {
-            fname: firstName.value.trim(),
-            lname: lastName.value.trim(),
-            category: clientCategory,
-            address: streetAdd.value.trim(),
-            city: city.value.trim(),
-            state: state.value.trim(),
-            zip: zipcode.value.trim(),
+        return {
+            fname: clientElement.querySelector('.client-name').textContent.trim(),
+            lname: '',
+            category: clientElement.querySelector('.client-category').textContent.trim(),
+            address: '',
+            clientCity: '',
+            clientState: '',
+            clientZip: '',
         };
-        return clientData;
     });
 
     localStorage.setItem('clientList', JSON.stringify(clients));
-
 }
-
-// loads client data from local storage
 
 function loadFromLocalStorage() {
     const savedClients = localStorage.getItem('clientList');
     if (savedClients) {
         const myClients = JSON.parse(savedClients);
         myClients.forEach(client => {
-            const { fname, lname, category } = client;
-
-            displayClient(fname, lname, category);
+            displayClient(client);
         });
     }
 }
 
 function updateCategoryOptions(customCategory) {
-    // Clear existing options
     categorySelect.innerHTML = '';
 
-    // Add custom category if provided
     if (customCategory) {
         const customOption = document.createElement('option');
         customOption.value = customCategory;
@@ -126,7 +104,6 @@ function updateCategoryOptions(customCategory) {
         categorySelect.appendChild(customOption);
     }
 
-    // Add default options
     ['Editing', 'Writing', 'Project Management'].forEach(category => {
         const option = document.createElement('option');
         option.value = category.toLowerCase();
@@ -135,7 +112,7 @@ function updateCategoryOptions(customCategory) {
     });
 }
 
-function clearClientInputs () {
+function clearClientInputs() {
     firstName.value = '';
     lastName.value = '';
     categoryInput.value = '';

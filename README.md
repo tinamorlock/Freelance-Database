@@ -3,3 +3,4 @@ This simple JavaScript webpage allows freelance workers to create and maintain a
 ## Features
 * Add and remove freelance clients
 ## Screenshot
+![img.png](img.png)
