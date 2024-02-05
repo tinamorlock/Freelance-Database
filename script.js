@@ -7,6 +7,8 @@ const streetAdd = document.getElementById('streetAdd');
 const city = document.getElementById('city');
 const state = document.getElementById('state');
 const zipcode = document.getElementById('zipcode');
+const email = document.getElementById('email');
+const website = document.getElementById('website');
 const ul = document.getElementById('clientList');
 
 // Event Listeners
@@ -20,6 +22,8 @@ function validateClient() {
     const clientArr = [
         firstName.value,
         lastName.value,
+        email.value,
+        website.value,
         streetAdd.value,
         city.value,
         state.value,
@@ -39,6 +43,8 @@ function createClient() {
         const clientData = {
             fname: firstName.value,
             lname: lastName.value,
+            email: email.value,
+            website: website.value,
             category: categorySelect.value || categoryInput.value,
             address: streetAdd.value,
             clientCity: city.value,
@@ -73,6 +79,8 @@ function saveToLocalStorage() {
         return {
             fname: clientElement.querySelector('.client-name').textContent.trim(),
             lname: '',
+            email: '',
+            website: '',
             category: clientElement.querySelector('.client-category').textContent.trim(),
             address: '',
             clientCity: '',
@@ -115,6 +123,8 @@ function updateCategoryOptions(customCategory) {
 function clearClientInputs() {
     firstName.value = '';
     lastName.value = '';
+    email.value = '';
+    website.value = '';
     categoryInput.value = '';
     categorySelect.value = '';
     streetAdd.value = '';
