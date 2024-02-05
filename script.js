@@ -60,7 +60,7 @@ function createClient() {
 
 function displayClient(clientData) {
     const li = document.createElement('li');
-    li.innerHTML = `<span class="client-name">${clientData.fname} ${clientData.lname}</span><span class="client-category">${clientData.category}</span> <button class="delete">delete</button>`;
+    li.innerHTML = `<span class="client-name">${clientData.fname} ${clientData.lname}</span><span class="client-category">${clientData.category}</span> <button class="delete">delete</button><button class="viewClient">view</button>`;
     ul.appendChild(li);
     li.querySelector('.delete').addEventListener('click', deleteClient);
 }
