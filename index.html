@@ -3,31 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My To-Do List</title>
+    <title>My Freelance Clients</title>
     <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body>
-<h1>Simple To-Do List</h1>
-<div id="instructions">
-    <ol>
-        <li>Enter an item in your to-do list.</li>
-        <li>Select a generic category or create your own.</li>
-        <li>Click the item to mark it as done. (Click again to unmark it as done.)</li>
-        <li>If you're REALLY sure it's finished, click the delete button to remove it.</li>
-    </ol>
-</div>
-<input type="text" id="userInput" placeholder="Enter a task you need to complete">
-<input type="text" id="categoryInput" placeholder="Enter or customize a category">
-<select id="categorySelect">
-    <option value="personal">Personal</option>
-    <option value="work">Work</option>
-    <option value="study">Study</option>
-    <!-- Add more categories as needed -->
-</select>
-<button id="enter">Add Item</button>
-<p></p>
-<h2>Tasks</h2>
-<ul id="toDoList"></ul>
+    <h1>Freelance Client Database</h1>
+    <div class="client-form">
+        <p class="client-input"><input type="text" id="firstName" placeholder="First Name">
+            <input type="text" id="lastName" placeholder="Last Name"></p>
+        <p class="client-input">
+            <select id="categorySelect">
+                <option value="editing">Editing</option>
+                <option value="writing">Writing</option>
+                <option value="project management">Project Management</option>
+                <!-- Add more categories as needed -->
+            </select>
+            <input type="text" id="otherCategory" placeholder="Or you can enter a custom category">
+        </p>
+        <p class="client-input">
+            <input type="text" id="streetAdd" placeholder="Street Address">
+        </p>
+        <p class="client-input">
+            <input type="text" id="city" placeholder="City">
+            <input type="text" id="state" placeholder="State">
+            <input type="text" id="zipcode" placeholder="Zip Code">
+        </p>
+        <p class="client-input">
+
+        </p>
+        <button id="enter">Add Client</button>
+    </div>
+    <p></p>
+    <h2>Clients</h2>
+    <ul id="clientList"></ul>
 
 
     <script src="script.js" type="text/javascript"></script>

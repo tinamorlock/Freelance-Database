@@ -1,71 +1,118 @@
 const button = document.getElementById('enter');
-const input = document.getElementById('userInput');
-const categoryInput = document.getElementById('categoryInput');
+const firstName = document.getElementById('firstName');
+const lastName = document.getElementById('lastName');
+const categoryInput = document.getElementById('otherCategory');
 const categorySelect = document.getElementById('categorySelect');
-const ul = document.getElementById('toDoList');
+const streetAdd = document.getElementById('streetAdd');
+const city = document.getElementById('city');
+const state = document.getElementById('state');
+const zipcode = document.getElementById('zipcode');
+const ul = document.getElementById('clientList');
 
-function inputLength() {
-    return input.value.length;
-}
+// Event Listeners
 
-function createListElement(text, category) {
-    const li = document.createElement('li');
-    li.innerHTML = `<span class="task">${text}</span> <span class="category">${category}</span> <button class="delete">delete</button>`;
-    ul.appendChild(li);
-    li.addEventListener('click', toggleDone);
-    li.querySelector('.delete').addEventListener('click', deleteItem);
-    saveToLocalStorage();
-}
-
-function addListAfterClickOrKeypress(event) {
-    if (inputLength() > 0 && (event.type === 'click' || (event.type === 'keydown' && event.key === 'Enter'))) {
-        const selectedCategory = categoryInput.value || categorySelect.value; // Use the custom category if provided
-        createListElement(input.value, selectedCategory);
-        input.value = '';
-    }
-}
-
-function toggleDone() {
-    this.classList.toggle('done');
-    saveToLocalStorage();
-}
-
-function deleteItem(event) {
-    event.stopPropagation();
-    const listItem = this.closest('li');
-    if (listItem) {
-        listItem.remove();
-        saveToLocalStorage();
-    }
-}
-
-function saveToLocalStorage() {
-    const items = Array.from(ul.children).map(item => {
-        const text = item.firstChild.textContent.trim();
-        const categoryStartIndex = text.indexOf('(Category:');
-        return categoryStartIndex !== -1 ? text.slice(0, categoryStartIndex).trim() : text;
-    });
-    localStorage.setItem('toDoListItems', JSON.stringify(items));
-}
-
-function loadFromLocalStorage() {
-    const savedItems = localStorage.getItem('toDoListItems');
-    if (savedItems) {
-        const items = JSON.parse(savedItems);
-        items.forEach(item => createListElement(item, 'Default Category')); // Assuming a default category for existing items
-    }
-}
-
-// Event listener for the category input field
+button.addEventListener('click', createClient);
 categoryInput.addEventListener('input', function () {
     updateCategoryOptions(categoryInput.value);
 });
 
-categoryInput.addEventListener('keydown', function (event) {
-    if (event.key === 'Enter') {
-        addListAfterClickOrKeypress(event);
+// checks that all values have been added
+
+function validateClient() {
+    clientArr = [
+        firstName.value,
+        lastName.value,
+        streetAdd.value,
+        city.value,
+        state.value,
+        zipcode.value,
+    ];
+    for (let x = 0; x < clientArr.length; x++) {
+        if (clientArr[x] === '') {
+            alert('Please fill in all the client data and resubmit.');
+            return false;
+        }
+        return true;
     }
-});
+}
+
+// grabs values from the input fields
+
+function createClient () {
+    if(validateClient()) {
+        const clientData = {
+            fname: firstName.value,
+            lname: lastName.value,
+            category: categorySelect.value || categoryInput.value,
+            address: streetAdd.value,
+            clientCity: city.value,
+            clientState: state.value,
+            clientZip: zipcode.value,
+        }
+
+        // adds to html page
+
+        displayClient(clientData.fname, clientData.lname, clientData.category);
+        saveToLocalStorage();
+        clearClientInputs();
+    }
+
+}
+
+// displays client name and category on the index page
+
+function displayClient(clientFirst, clientLast, clientCategory) {
+    const li = document.createElement('li');
+    li.innerHTML = `<span class="client-name"> ${clientFirst} ${clientLast}</span><span class="client-category">${clientCategory}</span> <button class="delete">delete</button>`;
+    ul.appendChild(li);
+    li.querySelector('.delete').addEventListener('click', deleteClient);
+}
+
+// deletes client from page and local storage
+
+function deleteClient(event) {
+    event.stopPropagation();
+    const deletedClient = this.closest('li');
+    if (deletedClient) {
+        deletedClient.remove();
+        saveToLocalStorage();
+    }
+}
+
+// saves any changes (add or remove) to local storage
+
+function saveToLocalStorage() {
+    const clients = Array.from(ul.children).map(clientElement => {
+        const clientCategory = categorySelect.value !== '' ? categorySelect.value : categoryInput.value;
+        const clientData = {
+            fname: firstName.value.trim(),
+            lname: lastName.value.trim(),
+            category: clientCategory,
+            address: streetAdd.value.trim(),
+            city: city.value.trim(),
+            state: state.value.trim(),
+            zip: zipcode.value.trim(),
+        };
+        return clientData;
+    });
+
+    localStorage.setItem('clientList', JSON.stringify(clients));
+
+}
+
+// loads client data from local storage
+
+function loadFromLocalStorage() {
+    const savedClients = localStorage.getItem('clientList');
+    if (savedClients) {
+        const myClients = JSON.parse(savedClients);
+        myClients.forEach(client => {
+            const { fname, lname, category } = client;
+
+            displayClient(fname, lname, category);
+        });
+    }
+}
 
 function updateCategoryOptions(customCategory) {
     // Clear existing options
@@ -80,7 +127,7 @@ function updateCategoryOptions(customCategory) {
     }
 
     // Add default options
-    ['Personal', 'Work', 'Study'].forEach(category => {
+    ['Editing', 'Writing', 'Project Management'].forEach(category => {
         const option = document.createElement('option');
         option.value = category.toLowerCase();
         option.textContent = category;
@@ -88,17 +135,15 @@ function updateCategoryOptions(customCategory) {
     });
 }
 
-ul.addEventListener('click', function (event) {
-    if (event.target.tagName === 'li') {
-        toggleDone.call(event.target);
-    }
-    if (event.target.classList.contains('delete')) {
-        deleteItem.call(event.target);
-    }
-});
+function clearClientInputs () {
+    firstName.value = '';
+    lastName.value = '';
+    categoryInput.value = '';
+    categorySelect.value = '';
+    streetAdd.value = '';
+    city.value = '';
+    state.value = '';
+    zipcode.value = '';
+}
 
-button.addEventListener('click', addListAfterClickOrKeypress);
-input.addEventListener('keydown', addListAfterClickOrKeypress);
-
-// Load items from local storage on page load
 loadFromLocalStorage();

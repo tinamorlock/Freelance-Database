@@ -1,37 +1,45 @@
+:root {
+    --green: #00916E;
+    --yellow: #FFCF00;
+    --light: #FEEFE5;
+    --black: #353935;
+}
+
 body {
     font-family: "Courier New";
-    background-color: black;
-    color: white;
+    background-color: var(--light);
+    color: var(--black);
     width: 100%;
 }
 
 h1 {
-    background-color: greenyellow;
-    color: black;
+    background-color: var(--green);
+    color: var(--yellow);
     text-align: center;
 }
 
 h2 {
     margin-top: 45px;
-    border: 2px solid greenyellow;
-    color: greenyellow;
+    border: 2px solid var(--yellow);
+    color: var(--yellow);
     display: inline-block;
     margin-left: 45px;
     padding: 1px;
+    background-color: var(--green);
 }
 
 button {
-    background-color: greenyellow;
+    background-color: var(--yellow);
     border: 0;
 }
 
 input {
-    background-color: yellowgreen;
-    color: black;
+    background-color: var(--yellow);
+    color: var(--black);
 }
 
 ::placeholder {
-    color: black;
+    color: var(--black);
     font-size: 115%;
 }
 
@@ -52,11 +60,35 @@ li {
     padding-right: 50px;
 }
 .category {
-    background-color: yellowgreen;
-    color: black;
+    background-color: var(--yellow);
+    color: var(--black);
     margin-right: 50px;
 }
 
 .done {
     text-decoration: line-through;
+}
+
+#firstName {
+    width: 25%;
+}
+
+#lastName {
+    width: 25%;
+}
+
+#otherCategory {
+    width: 25%;
+}
+
+#city {
+    width: 18%;
+}
+
+#state {
+    width: 5%;
+}
+
+#zipcode {
+    width: 7%;
 }
